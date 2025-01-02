@@ -2,33 +2,25 @@
 import { groq } from "next-sanity"
 import { client } from "../../sanity/lib/client"
 import Hero from "@/components/Hero"
-import { Post } from "../../../type"
+//import { Post } from "../../../type"
 import Blogcontent from "@/components/Blogcontent"
 
 const query = groq`*[_type == 'post']{
   _id,
   title,
-  description,  // Post's description
+  description,
   mainImage {
-    asset->{
-      _id,
-      url   // Get the image URL
-    }
+    asset -> { url }
   },
-  author-> {
+  author -> {
     name,
-    image {
-      asset->{
-        _id,
-        url   // Get the author image URL
-      }
-    }
+    image { asset -> { url } }
   },
-  categories[]-> {
+  categories[] -> {
     title
-  }
+  },
+  publishedAt 
 }
-
 
 
 `
@@ -42,6 +34,7 @@ export default async function Home() {
       <Hero />
      
 <div><Blogcontent posts={posts}/></div>
+
     </main>
   )
 }

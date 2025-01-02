@@ -28,9 +28,5 @@ export default defineConfig({
     visionTool({defaultApiVersion: apiVersion}),
    
   ],
-  studio:{
-    components:{
-      navbar:StudioNavbar,
-    }
-  },
+ 
 })

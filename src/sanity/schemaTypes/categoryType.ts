@@ -22,5 +22,6 @@ export const categoryType = defineType({
       name: 'description',
       type: 'text',
     }),
+    
   ],
 })

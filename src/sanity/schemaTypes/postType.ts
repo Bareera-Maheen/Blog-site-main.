@@ -63,6 +63,8 @@ export const postType = defineType({
       author: 'author.name',
       media: 'mainImage',
       image:'',
+      publishedAt:"datetime"
+      
     },
     prepare(selection) {
       const {author} = selection
