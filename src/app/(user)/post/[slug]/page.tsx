@@ -4,10 +4,11 @@ import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 import CommentSection from "@/components/CommentSection";
+import {  Slug } from "sanity";
 
 // Define Post interface without categories
 interface Post {
-  _id: string;
+  _id: any;
   title: string;
   description: string;
   mainImage: { asset: { url: string } };
@@ -17,7 +18,7 @@ interface Post {
   };
   body: any;
   publishedAt: string;
-  slug: { current: string };
+  slug: { current: Slug };
 }
 
 // Fetch post without categories field
