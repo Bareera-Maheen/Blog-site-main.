@@ -35,7 +35,7 @@ interface Post {
 // Fetch post based on slug
 const fetchPost = async (slugs: string[]) => {
   const query = groq`
-     *[_type == 'post' && slug.current in ["the-benefits-of-mindfulness-in-everyday-life", "don-t-stuck-in-one-thing"]] {
+    *[_type == 'post' && slug.current in ["the-benefits-of-mindfulness-in-everyday-life", "don-t-stuck-in-one-thing"]] {
       _id,
       title,
       description,
@@ -72,7 +72,7 @@ const fetchPost = async (slugs: string[]) => {
 // Params interface for dynamic route
 interface Params {
   params: {
-    slug: string; // Ensure this matches the dynamic route parameter
+    slug: string; // This will be passed via dynamic routing
   };
 }
 
@@ -145,3 +145,4 @@ const Slugmain = async ({ params }: Params) => {
 };
 
 export default Slugmain;
+ 
