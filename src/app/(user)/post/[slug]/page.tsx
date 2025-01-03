@@ -5,49 +5,60 @@ import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 import CommentSection from "@/components/CommentSection";
 
+// Define the Post and Author interfaces correctly
+interface Author {
+  name: string;
+  image: {
+    asset: {
+      url: string;
+    };
+  };
+}
 
-// Define Post interface without categories
-// interface Post {
-//   _id: string;
-//   title: string;
-//   description: string;
-//   mainImage: { asset: { url: string } };
-//   author: {
-//     name: string;
-//     image: { asset: { url: string } };
-//   };
-//   body: any;
-//   publishedAt: string;
-//   slug: { current: string };
-// }
+interface Post {
+  _id: string;
+  title: string;
+  description: string;
+  mainImage: {
+    asset: {
+      url: string;
+    };
+  };
+  body: any; // PortableText value
+  publishedAt: string;
+  slug: {
+    current: string;
+  };
+  author: Author;
+}
 
-// Fetch post without categories field
+// Fetch post based on slug
 const fetchPost = async (slug: string) => {
-   
-
-  const query = groq`*[_type == 'post' && slug.current in ["don-t-stuck-in-one-thing", "the-benefits-of-mindfulness-in-everyday-life"]] {
-    _slug,
-    title,
-    description,
-    mainImage {
-      asset->{
-        _id,
-        url
-      }
-    },
-    body,  
-    author->{
-      name,
-      image {
+  const query = groq`
+    *[_type == 'post' && slug.current == $slug] {
+      _id,
+      title,
+      description,
+      mainImage {
         asset->{
           _id,
           url
         }
+      },
+      body,
+      publishedAt,
+      slug,
+      author->{
+        name,
+        image {
+          asset->{
+            _id,
+            url
+          }
+        }
       }
     }
-  }
-  
-    `;
+  `;
 
   const post = await client.fetch(query, { slug });
 
@@ -56,10 +67,17 @@ const fetchPost = async (slug: string) => {
   }
 
   return post[0]; // Return the first post from the query
+};
+
+// Ensure `Params` is properly typed
+interface Params {
+  params: {
+    slug: string; // Ensure this matches the prop passed to the component
+  };
 }
 
-// Main Slug Component without categories rendering
-const Slugmain = async ({ params }: { params: { slug: string } }) => {
+// Main component
+const Slugmain = async ({ params }: Params) => {
   const post = await fetchPost(params.slug);
 
   if (!post) {
@@ -106,14 +124,16 @@ const Slugmain = async ({ params }: { params: { slug: string } }) => {
       </div>
 
       <p className="text-sm text-yellow-600">
-                Published on:{post.publishedAt}
-                {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-              <CommentSection/>
+        Published on:{" "}
+        {new Date(post.publishedAt).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}
+      </p>
+
+      {/* Comment section */}
+      <CommentSection />
     </div>
   );
 };
