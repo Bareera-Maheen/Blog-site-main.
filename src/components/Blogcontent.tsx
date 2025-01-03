@@ -2,10 +2,11 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image"; // Assuming this is the correct path
 //import { Post as PostType } from "../../type"; // Adjust path if needed
 import Link from "next/link";
+import CommentSection from "./CommentSection";
 
 
 interface Post {
-  _id: string;
+  _slug: string;
   title: string;
   description: string;
   mainImage: { asset: { url: string } };
@@ -25,7 +26,7 @@ const BlogContent = ({ posts }: { posts: Post[] }) => {
     <main className="bg-yellow-600 py-20 px-10 flex flex-col gap-10 text-black relative">
       {posts.map((post) => (
         <Link href={{pathname:`/post/${post?.slug?.current}`,query:{slug:post.slug?.current}}}
-          key={post._id}
+          key={post._slug}
           className="space-y-4 border border-zinc-100 lg:w-full xl:w-full rounded-lg md:w-3/5 group overflow-hidden"
         >
           <h2 className="text-4xl font-bold hover:underline text-center">{post.title}</h2>
@@ -84,6 +85,7 @@ const BlogContent = ({ posts }: { posts: Post[] }) => {
         </Link>
        
       ))}
+       <CommentSection/>
       
     </main>
   );

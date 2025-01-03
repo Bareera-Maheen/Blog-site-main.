@@ -33,7 +33,7 @@ const CommentSection: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white shadow-md rounded-md">
+    <div className="max-w-2xl mx-auto p-4 bg-white shadow-md rounded-xl ">
       <h2 className="text-xl font-extrabold uppercase mb-4">Comments</h2>
 
       {/* Display error message */}

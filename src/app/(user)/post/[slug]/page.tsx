@@ -4,22 +4,22 @@ import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 import CommentSection from "@/components/CommentSection";
-import {  Slug } from "sanity";
+
 
 // Define Post interface without categories
-interface Post {
-  _id: any;
-  title: string;
-  description: string;
-  mainImage: { asset: { url: string } };
-  author: {
-    name: string;
-    image: { asset: { url: string } };
-  };
-  body: any;
-  publishedAt: string;
-  slug: { current: Slug };
-}
+// interface Post {
+//   _id: string;
+//   title: string;
+//   description: string;
+//   mainImage: { asset: { url: string } };
+//   author: {
+//     name: string;
+//     image: { asset: { url: string } };
+//   };
+//   body: any;
+//   publishedAt: string;
+//   slug: { current: string };
+// }
 
 // Fetch post without categories field
 const fetchPost = async (slug: string) => {
@@ -56,7 +56,7 @@ const fetchPost = async (slug: string) => {
   }
 
   return post[0]; // Return the first post from the query
-};
+}
 
 // Main Slug Component without categories rendering
 const Slugmain = async ({ params }: { params: { slug: string } }) => {
